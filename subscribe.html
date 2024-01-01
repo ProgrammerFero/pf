@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subscribe Email & Name</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://unpkg.com/scrollreveal"></script>
+    <link rel="shortcut icon" href="assest/mylogo.png" type="image/x-icon">
+</head>
+<body>
+
+    <section class="subscribe" id="subscribe">
+        <form method="post" name="contact-form">
+            <div class="container">
+                <h3 id="top-bottom">Enter Your Email</h3>
+                <p id="top-bottom">To Use My Website</p>
+                <input name="email" type="email" id="email" class="subemail" placeholder="email@email.com" required>
+                <input name="number" type="number" id="email" class="subnumber" placeholder="+20 **** **** **" required>
+                <button id="send">Send</button>
+            </div>
+        </form>
+    </section>
+    
+    <script>
+        
+        const scriptURL = "https://script.google.com/macros/s/AKfycbxANzSzyodzb2unf3wA1uKFCGhwHQhgpu28SWY5TRK65T_BaNzhw4RvaHJ6Dk6lYbqz/exec";
+
+        const form = document.forms['contact-form'];
+        const input = document.querySelector(".subemail");
+        const subnumber = document.querySelector(".subnumber");
+
+        form.addEventListener("submit" , e => {
+            e.preventDefault()
+            fetch(scriptURL , {method: "post" , body: new FormData(form)})
+            .then(response => alert("Thanks You\n Your Data Is Submitted"))
+            .then(() => {window.location.reload();})
+            .catch(error => console.error("Error!!" , error.message))
+
+            localStorage.setItem("subemail" , JSON.stringify(input.value ))
+            localStorage.setItem("subnumber" , JSON.stringify(subnumber.value ))
+        })
+
+        if (localStorage.getItem("subemail") && localStorage.getItem("subnumber") ) {
+            window.location = "index.html" ;
+        } else {
+            console.log("There Is No Email , Number");
+        }
+
+        // scroll receal 
+        ScrollReveal({
+            reset: true,
+            distance: '80px',
+            duration: 2000,
+            delay: 200
+        });
+
+
+        ScrollReveal().reveal('.container' , { origin: 'top' });
+        ScrollReveal().reveal('#top-bottom , .subnumber', { origin: 'left' });
+        ScrollReveal().reveal('.subemail , #send', { origin: 'right' });
+    </script>
+</body>
+</html>
